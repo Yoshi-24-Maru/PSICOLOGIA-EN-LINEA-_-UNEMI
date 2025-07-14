@@ -1,172 +1,75 @@
 // script.js
 
-const courses = {
-  "Bases psicológicas de la Psicologia 1": [""],
-  "Bases biologícas de la psicología 2": ["Bases psicológicas de la Psicologia 1"],
-  "Enfoques y fundamentos históricos de la psicología": [""],
-  "Psicologia general 1": [""],
-  "Psicología general 2": ["Psicologia general 1"],
-  "Epistemologias de las ciencias sociales": [""],
-  "Realidad nacional": [""],
-  "Lengua y comunicación": [""],
-
-  "Direccion de equipos": [""],
-  "Gestion del desempeño": ["Direccion de equipos", "Reclutamiento, selección e inducción laboral"],
-  "Psicologia diferencial": [""],
-  "Estadistica 1": [""],
-  "Metodologia de la investigación": ["Estadistica 1"],
-  "Tecnologias de la información y comunicación": [""],
-
-  "Psicofisiología": ["Bases biologícas de la psicología 2"],
-  "Neuropsicologia 1": ["Psicofisiología"],
-  "Psicologia de la familia": [""],
-  "Deontologia y relaciones humanas": [""],
-  "Psicologia organizacional": [""],
-  "Reclutamiento, selección e inducción laboral": ["Psicologia organizacional"],
-  "Psicologia del consumo y de las masas": ["Psicologia organizacional"],
-  "Emprendimiento": [
-    "Psicologia organizacional",
-    "Diseño y gestión de proyectos",
-    "Problemas psicosociales",
-    "Intervencion en maltrato y violencia"
+const malla = {
+  "1° Semestre": [
+    { nombre: "Bases psicológicas de la Psicologia 1", reqs: [] },
+    { nombre: "Enfoques y fundamentos históricos de la psicología", reqs: [] },
+    { nombre: "Psicologia general 1", reqs: [] },
+    { nombre: "Epistemologias de las ciencias sociales", reqs: [] },
+    { nombre: "Realidad nacional", reqs: [] },
+    { nombre: "Lengua y comunicación", reqs: [] }
   ],
-
-  "Psicología del desarrollo 1": [""],
-  "Psicología del desarrollo 2": ["Psicología del desarrollo 1"],
-  "Teorias de la personalidad": [""],
-  "Psicopatología 1": ["Teorias de la personalidad"],
-  "Psicología jurídica criminalista y forense": [
-    "Teorias de la personalidad",
-    "Psicoterapia 1",
-    "Problemas psicosociales",
-    "Intervencion en maltrato y violencia"
+  "2° Semestre": [
+    { nombre: "Bases biologícas de la psicología 2", reqs: ["Bases psicológicas de la Psicologia 1"] },
+    { nombre: "Direccion de equipos", reqs: [] },
+    { nombre: "Psicologia general 2", reqs: ["Psicologia general 1"] },
+    { nombre: "Estadistica 1", reqs: [] },
+    { nombre: "Psicologia diferencial", reqs: [] },
+    { nombre: "Tecnologias de la información y comunicación", reqs: [] }
   ],
-
-  "Psicologia educativa": [""],
-  "Orientación educativa y profesional": ["Psicologia educativa"],
-  "Psicología social y comunitaria": [
-    "Metodologia de la investigación",
-    "Reclutamiento, selección e inducción laboral",
-    "Psicologia educativa",
-    "Psicopatología 1",
-    "Neuropsicologia 1",
-    "Psicología del desarrollo 2"
+  "3° Semestre": [
+    { nombre: "Psicofisiología", reqs: ["Bases biologícas de la psicología 2"] },
+    { nombre: "Psicologia de la familia", reqs: [] },
+    { nombre: "Deontologia y relaciones humanas", reqs: [] },
+    { nombre: "Psicologia organizacional", reqs: [] },
+    { nombre: "Psicología del desarrollo 1", reqs: [] },
+    { nombre: "Teorias de la personalidad", reqs: [] }
   ],
-
-  "Psicopatologia 2": ["Psicopatología 1"],
-  "Neurosicologia 2": ["Neuropsicologia 1"],
-  "Psicología de la salud": ["Gestion del desempeño", "Psicopatologia 2", "Neurosicologia 2"],
-  "Psicologia clínica 1": ["Psicopatologia 2", "Neurosicologia 2", "Psicología social y comunitaria"],
-  "Evaluación psicológica y psicométrica": [
-    "Neurosicologia 2",
-    "Orientación educativa y profesional",
-    "Psicología social y comunitaria"
-  ],
-  "Diseño y gestión de proyectos": [
-    "Reclutamiento, selección e inducción laboral",
-    "Orientación educativa y profesional"
-  ],
-  "Psicosexualidad": [""],
-  "Capacitacion y desarrollo": [""],
-  "Psicopedagogia": ["Orientación educativa y profesional"],
-
-  "Lectura y escritura de textos": [
-    "Psicología de la salud",
-    "Diseño y gestión de proyectos",
-    "Evaluación psicológica y psicométrica",
-    "Psicologia clínica 1",
-    "Psicopedagogia"
-  ],
-  "Psicología clínica 2": ["Psicologia clínica 1"],
-  "Seguridad y salud ocupacional": ["Evaluación psicológica y psicométrica", "Capacitacion y desarrollo"],
-  "Proceso de inclusión educativa": ["Psicopedagogia"],
-  "Psicología infantil y estimulación neuropsicológica": [
-    "Psicología de la salud",
-    "Evaluación psicológica y psicométrica",
-    "Psicologia clínica 1",
-    "Psicopedagogia"
-  ],
-  "Psicología del deporte": [
-    "Psicología de la salud",
-    "Psicologia clínica 1",
-    "Psicopedagogia"
-  ],
-
-  "Trabajo de titulación 1": [
-    "Lectura y escritura de textos",
-    "Seguridad y salud ocupacional",
-    "Proceso de inclusión educativa",
-    "Psicología infantil y estimulación neuropsicológica",
-    "Psicología del deporte"
-  ],
-  "Psicoterapia 1": [
-    "Psicología clínica 2",
-    "Psicología infantil y estimulación neuropsicológica",
-    "Psicología del deporte"
-  ],
-  "Psiquiatría y farmacología": [
-    "Psicología clínica 2",
-    "Psicología infantil y estimulación neuropsicológica",
-    "Psicología del deporte"
-  ],
-  "Problemas psicosociales": ["Psicología social y comunitaria"],
-  "Intervencion en maltrato y violencia": ["Psicología social y comunitaria"],
-
-  "Psicoterapia 2": [
-    "Psicoterapia 1",
-    "Psiquiatría y farmacología",
-    "Intervencion en maltrato y violencia"
-  ],
-  "Apoyo psicosocial en emergencias seguridad y riesgos": [
-    "Psiquiatría y farmacología",
-    "Problemas psicosociales",
-    "Intervencion en maltrato y violencia"
-  ],
-  "Trabajo de titulación 2": ["Trabajo de titulación 1"],
-
-  "Mediación y manejo de conflictos": [
-    "Diseño y gestión de proyectos",
-    "Psicoterapia 1",
-    "Psiquiatría y farmacología",
-    "Problemas psicosociales",
-    "Intervencion en maltrato y violencia"
-  ]
+  // Continúa agregando hasta el 9° semestre con el mismo formato
 };
 
 const grid = document.getElementById("grid");
-const state = {}; // Guarda qué cursos están aprobados
+const state = {};
 
-// Crear los botones
-Object.keys(courses).forEach((course) => {
-  const div = document.createElement("div");
-  div.className = "course";
-  div.textContent = course;
-  div.dataset.name = course;
-  state[course] = false;
-  grid.appendChild(div);
-});
+for (const [semestre, cursos] of Object.entries(malla)) {
+  const columna = document.createElement("div");
+  columna.className = "semestre";
+  const titulo = document.createElement("h2");
+  titulo.textContent = semestre;
+  columna.appendChild(titulo);
+
+  cursos.forEach(({ nombre, reqs }) => {
+    const div = document.createElement("div");
+    div.className = "course";
+    div.textContent = nombre;
+    div.dataset.name = nombre;
+    div.dataset.reqs = JSON.stringify(reqs);
+    state[nombre] = false;
+    columna.appendChild(div);
+  });
+
+  grid.appendChild(columna);
+}
 
 function updateGrid() {
   document.querySelectorAll(".course").forEach((div) => {
     const name = div.dataset.name;
-    const reqs = courses[name];
+    const reqs = JSON.parse(div.dataset.reqs);
     const unlocked = reqs.every((r) => r === "" || state[r]);
     div.classList.toggle("unlocked", unlocked);
   });
 }
 
-// Lógica de clic
+updateGrid();
+
 document.querySelectorAll(".course").forEach((div) => {
   div.addEventListener("click", () => {
     const name = div.dataset.name;
-    const reqs = courses[name];
+    const reqs = JSON.parse(div.dataset.reqs);
     const unlocked = reqs.every((r) => r === "" || state[r]);
-    if (!unlocked) return;
+    if (!unlocked || state[name]) return;
     state[name] = true;
     div.classList.add("completed");
     updateGrid();
   });
 });
-
-// Inicial
-updateGrid();
