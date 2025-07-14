@@ -1,43 +1,172 @@
-const canvas = document.getElementById("malla");
-const ctx = canvas.getContext("2d");
+// script.js
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const courses = {
+  "Bases psicológicas de la Psicologia 1": [""],
+  "Bases biologícas de la psicología 2": ["Bases psicológicas de la Psicologia 1"],
+  "Enfoques y fundamentos históricos de la psicología": [""],
+  "Psicologia general 1": [""],
+  "Psicología general 2": ["Psicologia general 1"],
+  "Epistemologias de las ciencias sociales": [""],
+  "Realidad nacional": [""],
+  "Lengua y comunicación": [""],
 
-const cols = 40;
-const rows = 40;
-const spacingX = canvas.width / cols;
-const spacingY = canvas.height / rows;
+  "Direccion de equipos": [""],
+  "Gestion del desempeño": ["Direccion de equipos", "Reclutamiento, selección e inducción laboral"],
+  "Psicologia diferencial": [""],
+  "Estadistica 1": [""],
+  "Metodologia de la investigación": ["Estadistica 1"],
+  "Tecnologias de la información y comunicación": [""],
 
-let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  "Psicofisiología": ["Bases biologícas de la psicología 2"],
+  "Neuropsicologia 1": ["Psicofisiología"],
+  "Psicologia de la familia": [""],
+  "Deontologia y relaciones humanas": [""],
+  "Psicologia organizacional": [""],
+  "Reclutamiento, selección e inducción laboral": ["Psicologia organizacional"],
+  "Psicologia del consumo y de las masas": ["Psicologia organizacional"],
+  "Emprendimiento": [
+    "Psicologia organizacional",
+    "Diseño y gestión de proyectos",
+    "Problemas psicosociales",
+    "Intervencion en maltrato y violencia"
+  ],
 
-window.addEventListener("mousemove", function(e) {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
+  "Psicología del desarrollo 1": [""],
+  "Psicología del desarrollo 2": ["Psicología del desarrollo 1"],
+  "Teorias de la personalidad": [""],
+  "Psicopatología 1": ["Teorias de la personalidad"],
+  "Psicología jurídica criminalista y forense": [
+    "Teorias de la personalidad",
+    "Psicoterapia 1",
+    "Problemas psicosociales",
+    "Intervencion en maltrato y violencia"
+  ],
+
+  "Psicologia educativa": [""],
+  "Orientación educativa y profesional": ["Psicologia educativa"],
+  "Psicología social y comunitaria": [
+    "Metodologia de la investigación",
+    "Reclutamiento, selección e inducción laboral",
+    "Psicologia educativa",
+    "Psicopatología 1",
+    "Neuropsicologia 1",
+    "Psicología del desarrollo 2"
+  ],
+
+  "Psicopatologia 2": ["Psicopatología 1"],
+  "Neurosicologia 2": ["Neuropsicologia 1"],
+  "Psicología de la salud": ["Gestion del desempeño", "Psicopatologia 2", "Neurosicologia 2"],
+  "Psicologia clínica 1": ["Psicopatologia 2", "Neurosicologia 2", "Psicología social y comunitaria"],
+  "Evaluación psicológica y psicométrica": [
+    "Neurosicologia 2",
+    "Orientación educativa y profesional",
+    "Psicología social y comunitaria"
+  ],
+  "Diseño y gestión de proyectos": [
+    "Reclutamiento, selección e inducción laboral",
+    "Orientación educativa y profesional"
+  ],
+  "Psicosexualidad": [""],
+  "Capacitacion y desarrollo": [""],
+  "Psicopedagogia": ["Orientación educativa y profesional"],
+
+  "Lectura y escritura de textos": [
+    "Psicología de la salud",
+    "Diseño y gestión de proyectos",
+    "Evaluación psicológica y psicométrica",
+    "Psicologia clínica 1",
+    "Psicopedagogia"
+  ],
+  "Psicología clínica 2": ["Psicologia clínica 1"],
+  "Seguridad y salud ocupacional": ["Evaluación psicológica y psicométrica", "Capacitacion y desarrollo"],
+  "Proceso de inclusión educativa": ["Psicopedagogia"],
+  "Psicología infantil y estimulación neuropsicológica": [
+    "Psicología de la salud",
+    "Evaluación psicológica y psicométrica",
+    "Psicologia clínica 1",
+    "Psicopedagogia"
+  ],
+  "Psicología del deporte": [
+    "Psicología de la salud",
+    "Psicologia clínica 1",
+    "Psicopedagogia"
+  ],
+
+  "Trabajo de titulación 1": [
+    "Lectura y escritura de textos",
+    "Seguridad y salud ocupacional",
+    "Proceso de inclusión educativa",
+    "Psicología infantil y estimulación neuropsicológica",
+    "Psicología del deporte"
+  ],
+  "Psicoterapia 1": [
+    "Psicología clínica 2",
+    "Psicología infantil y estimulación neuropsicológica",
+    "Psicología del deporte"
+  ],
+  "Psiquiatría y farmacología": [
+    "Psicología clínica 2",
+    "Psicología infantil y estimulación neuropsicológica",
+    "Psicología del deporte"
+  ],
+  "Problemas psicosociales": ["Psicología social y comunitaria"],
+  "Intervencion en maltrato y violencia": ["Psicología social y comunitaria"],
+
+  "Psicoterapia 2": [
+    "Psicoterapia 1",
+    "Psiquiatría y farmacología",
+    "Intervencion en maltrato y violencia"
+  ],
+  "Apoyo psicosocial en emergencias seguridad y riesgos": [
+    "Psiquiatría y farmacología",
+    "Problemas psicosociales",
+    "Intervencion en maltrato y violencia"
+  ],
+  "Trabajo de titulación 2": ["Trabajo de titulación 1"],
+
+  "Mediación y manejo de conflictos": [
+    "Diseño y gestión de proyectos",
+    "Psicoterapia 1",
+    "Psiquiatría y farmacología",
+    "Problemas psicosociales",
+    "Intervencion en maltrato y violencia"
+  ]
+};
+
+const grid = document.getElementById("grid");
+const state = {}; // Guarda qué cursos están aprobados
+
+// Crear los botones
+Object.keys(courses).forEach((course) => {
+  const div = document.createElement("div");
+  div.className = "course";
+  div.textContent = course;
+  div.dataset.name = course;
+  state[course] = false;
+  grid.appendChild(div);
 });
 
-function drawGrid() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      const posX = x * spacingX;
-      const posY = y * spacingY;
-
-      const dx = mouse.x - posX;
-      const dy = mouse.y - posY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      const angle = Math.atan2(dy, dx);
-      const len = Math.min(20, 100 / dist);
-
-      ctx.beginPath();
-      ctx.moveTo(posX, posY);
-      ctx.lineTo(posX + Math.cos(angle) * len, posY + Math.sin(angle) * len);
-      ctx.strokeStyle = `hsl(${dist}, 100%, 70%)`;
-      ctx.stroke();
-    }
-  }
-  requestAnimationFrame(drawGrid);
+function updateGrid() {
+  document.querySelectorAll(".course").forEach((div) => {
+    const name = div.dataset.name;
+    const reqs = courses[name];
+    const unlocked = reqs.every((r) => r === "" || state[r]);
+    div.classList.toggle("unlocked", unlocked);
+  });
 }
 
-drawGrid();
+// Lógica de clic
+document.querySelectorAll(".course").forEach((div) => {
+  div.addEventListener("click", () => {
+    const name = div.dataset.name;
+    const reqs = courses[name];
+    const unlocked = reqs.every((r) => r === "" || state[r]);
+    if (!unlocked) return;
+    state[name] = true;
+    div.classList.add("completed");
+    updateGrid();
+  });
+});
+
+// Inicial
+updateGrid();
