@@ -1,0 +1,58 @@
+/* estilos.css */
+
+body {
+  background-color: #f3e5f5; /* Morado pastel claro */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #4a148c;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+p {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.course {
+  background-color: #ce93d8; /* Morado pastel más fuerte */
+  border: 2px solid #ab47bc;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.course.unlocked {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.course.unlocked:hover {
+  background-color: #ba68c8;
+  transform: scale(1.03);
+}
+
+.course.completed {
+  background-color: #7e57c2;
+  color: white;
+  text-decoration: line-through;
+  cursor: default;
+}
