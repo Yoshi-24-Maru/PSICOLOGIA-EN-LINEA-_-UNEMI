@@ -1,7 +1,9 @@
+/* estilos.css actualizado para diseño responsivo y malla interactiva */
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f3e5f5;
+  background-color: #f3e5f5; /* Morado pastel claro */
   color: #4a148c;
 }
 
@@ -19,19 +21,22 @@ h1 {
 
 .semestres-container {
   display: flex;
-  overflow-x: auto;
-  padding: 20px;
+  flex-wrap: wrap;
   gap: 20px;
+  padding: 20px;
   justify-content: center;
   align-items: flex-start;
 }
 
 .semestre {
-  background-color: #f8bbd0;
+  background-color: #f8bbd0; /* Fondo rosa suave */
   border-radius: 12px;
   padding: 10px;
-  min-width: 220px;
-  flex-shrink: 0;
+  min-width: 250px;
+  max-width: 300px;
+  flex: 1 1 300px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .semestre h2 {
@@ -52,6 +57,7 @@ h1 {
   cursor: not-allowed;
   opacity: 0.5;
   transition: all 0.3s ease;
+  user-select: none;
 }
 
 .course.unlocked {
@@ -61,10 +67,12 @@ h1 {
 
 .course.unlocked:hover {
   background-color: #ba68c8;
+  transform: scale(1.03);
 }
 
 .course.completed {
   background-color: #7e57c2;
   color: white;
   text-decoration: line-through;
+  cursor: default;
 }
