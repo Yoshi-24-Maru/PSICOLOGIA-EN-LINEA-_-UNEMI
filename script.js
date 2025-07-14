@@ -1,90 +1,92 @@
-// script.js
+// script.js con nombres corregidos + guardado automático con localStorage
+
+const STORAGE_KEY = "mallaPsicologiaUNEMI";
 
 const malla = {
-  "1° Semestre": [
-    { nombre: "Bases psicológicas de la Psicologia 1", reqs: [] },
+  "1er semestre": [
+    { nombre: "Bases psicológicas de la Psicología 1", reqs: [] },
     { nombre: "Enfoques y fundamentos históricos de la psicología", reqs: [] },
-    { nombre: "Psicologia general 1", reqs: [] },
-    { nombre: "Epistemologias de las ciencias sociales", reqs: [] },
+    { nombre: "Psicología general 1", reqs: [] },
+    { nombre: "Epistemologías de las ciencias sociales", reqs: [] },
     { nombre: "Realidad nacional", reqs: [] },
     { nombre: "Lengua y comunicación", reqs: [] }
   ],
-  "2° Semestre": [
-    { nombre: "Bases biologícas de la psicología 2", reqs: ["Bases psicológicas de la Psicologia 1"] },
-    { nombre: "Direccion de equipos", reqs: [] },
-    { nombre: "Psicologia general 2", reqs: ["Psicologia general 1"] },
-    { nombre: "Estadistica 1", reqs: [] },
-    { nombre: "Psicologia diferencial", reqs: [] },
-    { nombre: "Tecnologias de la información y comunicación", reqs: [] }
+  "2do semestre": [
+    { nombre: "Bases biológicas de la psicología 2", reqs: ["Bases psicológicas de la Psicología 1"] },
+    { nombre: "Dirección de equipos", reqs: [] },
+    { nombre: "Psicología general 2", reqs: ["Psicología general 1"] },
+    { nombre: "Estadística 1", reqs: [] },
+    { nombre: "Psicología diferencial", reqs: [] },
+    { nombre: "Tecnologías de la información y comunicación", reqs: [] }
   ],
-  "3° Semestre": [
-    { nombre: "Psicofisiología", reqs: ["Bases biologícas de la psicología 2"] },
-    { nombre: "Psicologia de la familia", reqs: [] },
-    { nombre: "Deontologia y relaciones humanas", reqs: [] },
-    { nombre: "Psicologia organizacional", reqs: [] },
+  "3er semestre": [
+    { nombre: "Psicofisiología", reqs: ["Bases biológicas de la psicología 2"] },
+    { nombre: "Psicología de la familia", reqs: [] },
+    { nombre: "Deontología y relaciones humanas", reqs: [] },
+    { nombre: "Psicología organizacional", reqs: [] },
     { nombre: "Psicología del desarrollo 1", reqs: [] },
-    { nombre: "Teorias de la personalidad", reqs: [] }
+    { nombre: "Teorías de la personalidad", reqs: [] }
   ],
-  "4° Semestre": [
-    { nombre: "Metodologia de la investigación", reqs: ["Estadistica 1"] },
-    { nombre: "Reclutamiento, selección e inducción laboral", reqs: ["Psicologia organizacional"] },
-    { nombre: "Psicologia educativa", reqs: [] },
-    { nombre: "Psicopatología 1", reqs: ["Teorias de la personalidad"] },
-    { nombre: "Neuropsicologia 1", reqs: ["Psicofisiología"] },
-    { nombre: "Psicologia del desarrollo 2", reqs: ["Psicología del desarrollo 1"] }
+  "4to semestre": [
+    { nombre: "Metodología de la investigación", reqs: ["Estadística 1"] },
+    { nombre: "Reclutamiento, selección e inducción laboral", reqs: ["Psicología organizacional"] },
+    { nombre: "Psicología educativa", reqs: [] },
+    { nombre: "Psicopatología 1", reqs: ["Teorías de la personalidad"] },
+    { nombre: "Neuropsicología 1", reqs: ["Psicofisiología"] },
+    { nombre: "Psicología del desarrollo", reqs: ["Psicología del desarrollo 1"] }
   ],
-  "5° Semestre": [
-    { nombre: "Gestion del desempeño", reqs: ["Direccion de equipos", "Reclutamiento, selección e inducción laboral"] },
-    { nombre: "Psicopatologia 2", reqs: ["Psicopatología 1"] },
-    { nombre: "Neurosicologia 2", reqs: ["Neuropsicologia 1"] },
-    { nombre: "Orientación educativa y profesional", reqs: ["Psicologia educativa"] },
+  "5to semestre": [
+    { nombre: "Gestión del desempeño", reqs: ["Dirección de equipos", "Reclutamiento, selección e inducción laboral"] },
+    { nombre: "Psicopatología 2", reqs: ["Psicopatología 1"] },
+    { nombre: "Neuropsicología 2", reqs: ["Neuropsicología 1"] },
+    { nombre: "Orientación educativa y profesional", reqs: ["Psicología educativa"] },
     { nombre: "Psicosexualidad", reqs: [] },
     { nombre: "Psicología social y comunitaria", reqs: [
-      "Metodologia de la investigación",
+      "Metodología de la investigación",
       "Reclutamiento, selección e inducción laboral",
-      "Psicologia educativa",
+      "Psicología educativa",
       "Psicopatología 1",
-      "Neuropsicologia 1",
-      "Psicologia del desarrollo 2"
+      "Neuropsicología 1",
+      "Psicología del desarrollo"
     ] }
   ],
-  "6° Semestre": [
-    { nombre: "Psicología de la salud", reqs: ["Gestion del desempeño", "Psicopatologia 2", "Neurosicologia 2"] },
+  "6to semestre": [
+    { nombre: "Psicología de la salud", reqs: ["Gestión del desempeño", "Psicopatología 2", "Neuropsicología 2"] },
     { nombre: "Diseño y gestión de proyectos", reqs: ["Reclutamiento, selección e inducción laboral", "Orientación educativa y profesional"] },
-    { nombre: "Evaluación psicológica y psicométrica", reqs: ["Neurosicologia 2", "Orientación educativa y profesional", "Psicología social y comunitaria"] },
-    { nombre: "Psicologia clínica 1", reqs: ["Psicopatologia 2", "Neurosicologia 2", "Psicología social y comunitaria"] },
-    { nombre: "Capacitacion y desarrollo", reqs: [] },
-    { nombre: "Psicopedagogia", reqs: ["Orientación educativa y profesional"] }
+    { nombre: "Evaluación psicológica y psicométrica", reqs: ["Neuropsicología 2", "Orientación educativa y profesional", "Psicología social y comunitaria"] },
+    { nombre: "Psicología clínica 1", reqs: ["Psicopatología 2", "Neuropsicología 2", "Psicología social y comunitaria"] },
+    { nombre: "Capacitación y desarrollo", reqs: [] },
+    { nombre: "Psicopedagogía", reqs: ["Orientación educativa y profesional"] }
   ],
-  "7° Semestre": [
+  "7mo semestre": [
     { nombre: "Lectura y escritura de textos", reqs: [
       "Psicología de la salud",
       "Diseño y gestión de proyectos",
       "Evaluación psicológica y psicométrica",
-      "Psicologia clínica 1",
-      "Psicopedagogia"
+      "Psicología clínica 1",
+      "Psicopedagogía"
     ] },
-    { nombre: "Psicología clínica 2", reqs: ["Psicologia clínica 1"] },
-    { nombre: "Seguridad y salud ocupacional", reqs: ["Evaluación psicológica y psicométrica", "Capacitacion y desarrollo"] },
-    { nombre: "Proceso de inclusión educativa", reqs: ["Psicopedagogia"] },
+    { nombre: "Psicología clínica 2", reqs: ["Psicología clínica 1"] },
+    { nombre: "Seguridad y salud ocupacional", reqs: ["Evaluación psicológica y psicométrica", "Capacitación y desarrollo"] },
+    { nombre: "Proceso de inclusión educativa", reqs: ["Psicopedagogía"] },
     { nombre: "Psicología infantil y estimulación neuropsicológica", reqs: [
       "Psicología de la salud",
       "Evaluación psicológica y psicométrica",
-      "Psicologia clínica 1",
-      "Psicopedagogia"
+      "Psicología clínica 1",
+      "Psicopedagogía"
     ] },
     { nombre: "Psicología del deporte", reqs: [
       "Psicología de la salud",
-      "Psicologia clínica 1",
-      "Psicopedagogia"
+      "Psicología clínica 1",
+      "Psicopedagogía"
     ] }
   ],
-  "8° Semestre": [
+  "8vo semestre": [
     { nombre: "Psicoterapia 1", reqs: ["Psicología clínica 2", "Psicología infantil y estimulación neuropsicológica", "Psicología del deporte"] },
-    { nombre: "Psicologia del consumo y de las masas", reqs: ["Psicologia organizacional"] },
+    { nombre: "Psicología del consumo y de las masas", reqs: ["Psicología organizacional"] },
     { nombre: "Psiquiatría y farmacología", reqs: ["Psicología clínica 2", "Psicología infantil y estimulación neuropsicológica", "Psicología del deporte"] },
     { nombre: "Problemas psicosociales", reqs: ["Psicología social y comunitaria"] },
-    { nombre: "Intervencion en maltrato y violencia", reqs: ["Psicología social y comunitaria"] },
+    { nombre: "Intervención en maltrato y violencia", reqs: ["Psicología social y comunitaria"] },
     { nombre: "Trabajo de titulación 1", reqs: [
       "Lectura y escritura de textos",
       "Seguridad y salud ocupacional",
@@ -93,42 +95,42 @@ const malla = {
       "Psicología del deporte"
     ] }
   ],
-  "9° Semestre": [
+  "9no semestre": [
     { nombre: "Mediación y manejo de conflictos", reqs: [
       "Diseño y gestión de proyectos",
       "Psicoterapia 1",
       "Psiquiatría y farmacología",
       "Problemas psicosociales",
-      "Intervencion en maltrato y violencia"
+      "Intervención en maltrato y violencia"
     ] },
     { nombre: "Emprendimiento", reqs: [
-      "Psicologia organizacional",
+      "Psicología organizacional",
       "Diseño y gestión de proyectos",
       "Problemas psicosociales",
-      "Intervencion en maltrato y violencia"
+      "Intervención en maltrato y violencia"
     ] },
     { nombre: "Psicología jurídica criminalista y forense", reqs: [
-      "Teorias de la personalidad",
+      "Teorías de la personalidad",
       "Psicoterapia 1",
       "Problemas psicosociales",
-      "Intervencion en maltrato y violencia"
+      "Intervención en maltrato y violencia"
     ] },
     { nombre: "Psicoterapia 2", reqs: [
       "Psicoterapia 1",
       "Psiquiatría y farmacología",
-      "Intervencion en maltrato y violencia"
+      "Intervención en maltrato y violencia"
     ] },
     { nombre: "Apoyo psicosocial en emergencias seguridad y riesgos", reqs: [
       "Psiquiatría y farmacología",
       "Problemas psicosociales",
-      "Intervencion en maltrato y violencia"
+      "Intervención en maltrato y violencia"
     ] },
     { nombre: "Trabajo de titulación 2", reqs: ["Trabajo de titulación 1"] }
   ]
 };
 
 const grid = document.getElementById("grid");
-const state = {};
+const state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
 for (const [semestre, cursos] of Object.entries(malla)) {
   const columna = document.createElement("div");
@@ -143,7 +145,7 @@ for (const [semestre, cursos] of Object.entries(malla)) {
     div.textContent = nombre;
     div.dataset.name = nombre;
     div.dataset.reqs = JSON.stringify(reqs);
-    state[nombre] = false;
+    if (state[nombre]) div.classList.add("completed");
     columna.appendChild(div);
   });
 
@@ -170,5 +172,6 @@ document.querySelectorAll(".course").forEach((div) => {
     state[name] = true;
     div.classList.add("completed");
     updateGrid();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   });
 });
